@@ -1,0 +1,278 @@
+Design Patterns
+
+SOLID - Pattern
+1. Single Responsibility Principle (SRP)
+Principle: A class should have only one reason to change, meaning it should only have one job or responsibility.
+
+Examples in Swift:
+
+Logger Class: A class dedicated solely to logging information to various outputs. It should not handle business logic or data processing.
+
+swift
+Copy code
+class Logger {
+    func log(message: String) {
+        // Implement logging logic
+    }
+}
+UserValidator Class: Focuses only on validating user information.
+
+swift
+Copy code
+class UserValidator {
+    func isValidUser(user: User) -> Bool {
+        // Implement validation logic
+    }
+}
+DatabaseManager Class: Manages database connections and queries, not involved in UI or business logic.
+
+swift
+Copy code
+class DatabaseManager {
+    func connectToDatabase() {
+        // Database connection logic
+    }
+
+    func executeQuery(query: String) {
+        // Execute query logic
+    }
+}
+2. Open-Closed Principle (OCP)
+Principle: Software entities should be open for extension but closed for modification. This means you should be able to add new functionality without changing existing code.
+
+Examples in Swift:
+
+Shape Protocol and Implementations: Creating a protocol for shapes and extending it without modifying the protocol itself.
+
+swift
+Copy code
+protocol Shape {
+    func area() -> Double
+}
+
+class Circle: Shape {
+    var radius: Double
+    func area() -> Double {
+        return Double.pi * radius * radius
+    }
+}
+
+class Square: Shape {
+    var side: Double
+    func area() -> Double {
+        return side * side
+    }
+}
+Payment Processor with Strategy Pattern: Using a protocol to define a payment method and implementing various payment strategies.
+
+swift
+Copy code
+protocol PaymentProcessor {
+    func processPayment(amount: Double)
+}
+
+class CreditCardProcessor: PaymentProcessor {
+    func processPayment(amount: Double) {
+        // Credit card processing logic
+    }
+}
+
+class PayPalProcessor: PaymentProcessor {
+    func processPayment(amount: Double) {
+        // PayPal processing logic
+    }
+}
+Reporting with Template Method Pattern: A base report class that can be extended but not modified.
+
+swift
+Copy code
+class Report {
+    func generate() {
+        // Common report generation steps
+    }
+}
+
+class SalesReport: Report {
+    override func generate() {
+        super.generate()
+        // Additional steps for sales report
+    }
+}
+3. Liskov Substitution Principle (LSP)
+Principle: Objects of a superclass shall be replaceable with objects of its subclasses without affecting the correctness of the program.
+
+Examples in Swift:
+
+Bird Hierarchy: Ensuring that subclasses of a Bird class can be replaced without affecting behavior.
+
+swift
+Copy code
+class Bird {
+    func fly() { /* ... */ }
+}
+
+class Sparrow: Bird { /* ... */ }
+class Ostrich: Bird { /* ... */ }
+Transport Vehicle: Vehicles subclass should be interchangeable.
+
+swift
+Copy code
+class Vehicle {
+    func startEngine() { /* ... */ }
+}
+
+class Car: Vehicle { /* ... */ }
+class Motorcycle: Vehicle { /* ... */ }
+File Reader Classes: Subclasses of a FileReader should be substitutable.
+
+swift
+Copy code
+class FileReader {
+    func read() { /* ... */ }
+}
+
+class TextFileReader: FileReader { /* ... */ }
+class BinaryFileReader: FileReader { /* ... */ }
+4. Interface Segregation Principle (ISP)
+Principle: Clients should not be forced to depend upon interfaces that they do not use. This principle is about business logic to client communication.
+
+Examples in Swift:
+
+Modular Printer Interface: Splitting a large interface into smaller, more specific ones.
+
+swift
+Copy code
+protocol Printer {
+    func printDocument()
+}
+
+protocol Scanner {
+    func scanDocument()
+}
+
+class MultiFunctionPrinter: Printer, Scanner {
+    func printDocument() { /* ... */ }
+    func scanDocument() { /* ... */ }
+}
+Animal Behaviors: Defining specific behavior interfaces instead of a single large Animal interface.
+
+swift
+Copy code
+protocol Walker {
+    func walk()
+}
+
+protocol Swimmer {
+    func swim()
+}
+
+class Dog: Walker, Swimmer {
+    func walk() { /* ... */ }
+    func swim() { /* ... */ }
+}
+User Actions: Creating focused protocols for different user actions.
+
+swift
+Copy code
+protocol Login {
+    func login()
+}
+
+protocol Register {
+    func register()
+}
+
+class UserAccount: Login, Register {
+    func login() { /* ... */ }
+    func register() { /* ... */ }
+}
+5. Dependency Inversion Principle (DIP)
+Principle: High-level modules should not depend on low-level modules. Both should depend on abstractions. Abstractions should not depend on details. Details should depend on abstractions.
+
+Examples in Swift:
+
+Data Source Abstraction: Using protocols to abstract data source implementations.
+
+swift
+Copy code
+protocol DataSource {
+    func fetchData()
+}
+
+class DatabaseDataSource: DataSource {
+    func fetchData() { /* ... */ }
+}
+
+class APIDataSource: DataSource {
+    func fetchData() { /* ... */ }
+}
+
+class DataManager {
+    var dataSource: DataSource
+
+    init(dataSource: DataSource) {
+        self.dataSource = dataSource
+    }
+
+    func getData() {
+        dataSource.fetchData()
+    }
+}
+Network Communication: Abstracting network layer using protocols.
+
+swift
+Copy code
+protocol NetworkService {
+    func fetchData(url: URL)
+}
+
+class HTTPService: NetworkService {
+    func fetchData(url: URL) { /* ... */ }
+}
+
+class Client {
+    var networkService: NetworkService
+
+    init(networkService: NetworkService) {
+        self.networkService = networkService
+    }
+
+    func performRequest() {
+        // Use networkService to perform the request
+    }
+}
+Logger Abstraction: Creating a logging interface to abstract the logging mechanism.
+
+swift
+Copy code
+protocol Logger {
+    func log(message: String)
+}
+
+class ConsoleLogger: Logger {
+    func log(message: String) { /* ... */ }
+}
+
+class FileLogger: Logger {
+    func log(message: String) { /* ... */ }
+}
+
+class Application {
+    var logger: Logger
+
+    init(logger: Logger) {
+        self.logger = logger
+    }
+
+    func process() {
+        logger.log(message: "Processing...")
+        // Application logic
+    }
+}
+These examples in Swift illustrate the implementation of SOLID principles, helping to create software that is easier to understand, maintain, and extend.
+
+
+
+
+
+
